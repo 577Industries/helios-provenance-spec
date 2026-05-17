@@ -140,3 +140,10 @@ are particularly hungry for community input.
   url          = {https://github.com/577Industries/helios-provenance-spec},
 }
 ```
+
+## Related
+
+- **HELIOS program**: [`helios-program`](https://github.com/577Industries/helios-program) — master plan, proposal companion document, orchestration scripts. Start here for program-level context.
+- **Wave 1 review pack**: [Artifact A v0.1 review pack](https://github.com/577Industries/helios-program/blob/main/specs/2026-05-17-A-provenance-spec-review-pack.md) — operator-facing summary of v0.1.0 release, design decisions, and open RFC questions.
+- **Consumers**: [`helios-spaceweather-connectors`](https://github.com/577Industries/helios-spaceweather-connectors) and [`helios-fusion-engine`](https://github.com/577Industries/helios-fusion-engine) import this schema for provenance emission and validation.
+- **RFC discussion**: see open issues on this repo for community comment on the 8 §6 questions in [`rfc/RFC-0001-feature-lineage.md`](./rfc/RFC-0001-feature-lineage.md).
