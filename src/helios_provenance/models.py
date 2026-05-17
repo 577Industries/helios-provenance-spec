@@ -373,8 +373,6 @@ def parse_record(payload: Mapping[str, Any]) -> HeliosProvenanceRecord:
         raise ValueError("record_type field is required and must be a string")
     model_cls = _RECORD_TYPES.get(rt)
     if model_cls is None:
-        raise ValueError(
-            f"unknown record_type {rt!r}; expected one of {sorted(_RECORD_TYPES)}"
-        )
+        raise ValueError(f"unknown record_type {rt!r}; expected one of {sorted(_RECORD_TYPES)}")
     logger.debug("parsing %s record", rt)
     return model_cls.model_validate(payload)

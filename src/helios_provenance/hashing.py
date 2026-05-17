@@ -39,9 +39,12 @@ from typing import Any, Final
 try:
     import rfc8785
 
-    _HAVE_RFC8785: Final[bool] = True
+    _HAVE_RFC8785_TMP = True
 except ImportError:  # pragma: no cover — covered indirectly by fallback test
-    _HAVE_RFC8785 = False
+    rfc8785 = None  # type: ignore[assignment]
+    _HAVE_RFC8785_TMP = False
+
+_HAVE_RFC8785: Final[bool] = _HAVE_RFC8785_TMP
 
 logger = logging.getLogger(__name__)
 

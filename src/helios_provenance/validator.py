@@ -28,7 +28,7 @@ from importlib import resources
 from pathlib import Path
 from typing import Any
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 from jsonschema.exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
@@ -60,13 +60,21 @@ class HeliosProvenanceValidator:
         if schema is None:
             schema = load_schema()
         Draft202012Validator.check_schema(schema)
-        self._validator = Draft202012Validator(dict(schema))
+        # FormatChecker turns the schema's `format` keywords (date-time, uri,
+        # pattern, etc.) into hard assertions. Without this the validator
+        # treats them as annotations and silently accepts e.g. "not-a-date".
+        self._validator = Draft202012Validator(dict(schema), format_checker=FormatChecker())
 
     @property
     def schema(self) -> Mapping[str, Any]:
         """Return the underlying JSON Schema dict."""
 
-        return self._validator.schema  # type: ignore[no-any-return]
+        # jsonschema's typestubs declare `.schema` as `bool | Mapping[str, Any]`
+        # (a boolean schema is valid JSON Schema), but at runtime we only ever
+        # construct from a dict. Narrow back to Mapping for callers.
+        result = self._validator.schema
+        assert isinstance(result, Mapping)
+        return result
 
     def errors(self, instance: Mapping[str, Any]) -> list[ValidationError]:
         """Return all validation errors as a list (empty == valid)."""
@@ -136,7 +144,9 @@ def main(argv: list[str] | None = None) -> int:
         errs = validator.errors(instance)
         if errs:
             overall_ok = False
-            logger.error("%s: INVALID (%d error%s)", filename, len(errs), "s" if len(errs) != 1 else "")
+            logger.error(
+                "%s: INVALID (%d error%s)", filename, len(errs), "s" if len(errs) != 1 else ""
+            )
             for err in errs:
                 logger.error("%s", _format_error(err))
         else:

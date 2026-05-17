@@ -137,10 +137,9 @@ def records_to_prov_json(records: Iterable[HeliosProvenanceRecord]) -> dict[str,
     used_counter = 0
     gen_counter = 0
     derived_counter = 0
-    attr_counter = 0
 
     seen_agents: set[str] = set()
-    for record in records:
+    for attr_counter, record in enumerate(records, start=1):
         agent_id = record.agent.id
         if agent_id not in seen_agents:
             prov["agent"][agent_id] = {
@@ -152,7 +151,6 @@ def records_to_prov_json(records: Iterable[HeliosProvenanceRecord]) -> dict[str,
                 prov["agent"][agent_id]["helios:version"] = record.agent.version
             seen_agents.add(agent_id)
 
-        attr_counter += 1
         prov["wasAttributedTo"][f"_:attr{attr_counter}"] = {
             "prov:entity": record.id,
             "prov:agent": agent_id,
@@ -201,4 +199,4 @@ def records_to_prov_json(records: Iterable[HeliosProvenanceRecord]) -> dict[str,
     return prov
 
 
-__all__ = ["dataset_to_spase_xml", "records_to_prov_json", "SPASE_VERSION"]
+__all__ = ["SPASE_VERSION", "dataset_to_spase_xml", "records_to_prov_json"]
