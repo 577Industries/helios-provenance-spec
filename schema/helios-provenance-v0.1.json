@@ -1,0 +1,423 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://577industries.github.io/helios-provenance-spec/schema/helios-provenance-v0.1.json",
+  "title": "HELIOS Provenance Spec v0.1",
+  "description": "JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs. Composes SPASE 2.7.1 (dataset metadata), W3C PROV-JSON (lineage relations), and RO-Crate 1.2 JSON-LD (packaging) with a novel feature-level transformation chain that no existing heliophysics standard captures. RFC v0.1 — community feedback expected before stabilising to v1.0.",
+  "type": "object",
+  "$defs": {
+    "iso8601DateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 / RFC 3339 timestamp with explicit timezone (typically UTC: trailing Z or +00:00)."
+    },
+    "uri": {
+      "type": "string",
+      "format": "uri",
+      "description": "Absolute URI. Often a DOI, dataset landing-page URL, or git permalink."
+    },
+    "sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hex SHA-256 digest."
+    },
+    "recordId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "description": "Identifier for a HELIOS provenance record. Convention: 'helios:<type>:<source>:<localpart>' (e.g. 'helios:dataset:donki:flare/2024-05-08T01:30Z')."
+    },
+    "Agent": {
+      "type": "object",
+      "description": "The who/what (software, service, or person) that created the record. Maps to W3C PROV `Agent`.",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/recordId",
+          "description": "Stable identifier for the agent (e.g. 'helios:agent:fusion-engine@0.1.2')."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable agent name."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["software", "service", "person", "organization"]
+        },
+        "version": {
+          "type": "string",
+          "description": "Software/service version, when applicable."
+        }
+      },
+      "required": ["id", "name", "type"],
+      "additionalProperties": false
+    },
+    "TemporalCoverage": {
+      "type": "object",
+      "description": "SPASE-style temporal coverage. Either both start and stop, or start only (open-ended).",
+      "properties": {
+        "start": { "$ref": "#/$defs/iso8601DateTime" },
+        "stop": { "$ref": "#/$defs/iso8601DateTime" },
+        "cadence": {
+          "type": "string",
+          "description": "ISO-8601 duration for sample cadence (e.g. 'PT1M', 'PT2H'). Optional."
+        }
+      },
+      "required": ["start"],
+      "additionalProperties": false
+    },
+    "SpatialCoverage": {
+      "type": "object",
+      "description": "SPASE-style spatial coverage. Free-form to accommodate heliophysics location semantics (heliocentric, geocentric, magnetospheric regions, ionospheric grid cells).",
+      "properties": {
+        "frame": {
+          "type": "string",
+          "description": "Coordinate frame (e.g. 'GSE', 'GSM', 'HGS', 'WGS84')."
+        },
+        "region": {
+          "type": "string",
+          "description": "Named region (e.g. 'L1', 'Heliosphere', 'Ionosphere.F-region', 'Magnetosphere.Plasmasphere')."
+        },
+        "bbox": {
+          "type": "array",
+          "description": "Bounding box [min_x, min_y, max_x, max_y] or [min_lon, min_lat, max_lon, max_lat] depending on frame.",
+          "items": { "type": "number" },
+          "minItems": 4,
+          "maxItems": 6
+        },
+        "point": {
+          "type": "object",
+          "description": "Single observation point.",
+          "properties": {
+            "lon": { "type": "number" },
+            "lat": { "type": "number" },
+            "alt": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ConfidenceInterval": {
+      "type": "object",
+      "description": "Generic confidence interval for an upstream model output. Distribution-free (no Gaussianity assumed).",
+      "properties": {
+        "lower": { "type": "number" },
+        "upper": { "type": "number" },
+        "alpha": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 1,
+          "description": "Miscoverage rate (e.g. 0.1 for a 90% interval)."
+        },
+        "method": {
+          "type": "string",
+          "description": "Method label (e.g. 'conformal-split', 'bootstrap', 'reported-by-source')."
+        }
+      },
+      "required": ["lower", "upper", "alpha"],
+      "additionalProperties": false
+    },
+    "ConformalInterval": {
+      "type": "object",
+      "description": "Conformal prediction interval. Required on `HeliosFusedOutputRecord`.",
+      "properties": {
+        "lower": { "type": "number" },
+        "upper": { "type": "number" },
+        "alpha": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMaximum": 1,
+          "description": "Miscoverage rate. e.g. alpha=0.1 → nominal 90% coverage."
+        },
+        "method": {
+          "type": "string",
+          "enum": ["conformal-split", "conformal-mondrian", "conformal-cv-plus", "other"],
+          "default": "conformal-split"
+        },
+        "calibration_set_size": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Size of the held-out calibration set used to compute the conformal quantile."
+        }
+      },
+      "required": ["lower", "upper", "alpha"],
+      "additionalProperties": false
+    },
+    "LineageStep": {
+      "type": "object",
+      "description": "One step of feature-level lineage on a fused output. Mirrors a W3C PROV `Activity` plus the `used` / `wasGeneratedBy` edges incident to it.",
+      "properties": {
+        "transformation_ref": {
+          "$ref": "#/$defs/recordId",
+          "description": "ID of the `HeliosTransformationRecord` that this step instantiates."
+        },
+        "input_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recordId" },
+          "minItems": 1,
+          "description": "IDs of the model-output records (or upstream lineage-step outputs) consumed by this step."
+        },
+        "output_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recordId" },
+          "minItems": 1,
+          "description": "IDs of the model-output records produced by this step. The final step's outputs typically include the parent FusedOutputRecord itself."
+        },
+        "weight": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Optional weight applied at this step (e.g. BMA mixture weight for an input)."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Free-form annotation, e.g. 'isotonic calibration learned on 90-day rolling window 2024-02-08 .. 2024-05-08'."
+        }
+      },
+      "required": ["transformation_ref", "input_refs", "output_refs"],
+      "additionalProperties": false
+    },
+    "HeliosProvenanceRecord": {
+      "type": "object",
+      "description": "Base type for every HELIOS provenance record.",
+      "properties": {
+        "id": { "$ref": "#/$defs/recordId" },
+        "record_type": {
+          "type": "string",
+          "enum": [
+            "HeliosDatasetRecord",
+            "HeliosModelOutputRecord",
+            "HeliosTransformationRecord",
+            "HeliosFusedOutputRecord"
+          ]
+        },
+        "schema_version": {
+          "type": "string",
+          "const": "0.1.0",
+          "description": "SemVer of the HELIOS provenance schema this record conforms to."
+        },
+        "created_at": { "$ref": "#/$defs/iso8601DateTime" },
+        "agent": { "$ref": "#/$defs/Agent" }
+      },
+      "required": ["id", "record_type", "schema_version", "created_at", "agent"]
+    },
+    "HeliosDatasetRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/HeliosProvenanceRecord" },
+        {
+          "type": "object",
+          "description": "Dataset-level metadata for one upstream space-weather data source. Designed to be losslessly crosswalkable to a SPASE 2.7.1 `NumericalData` or `Catalog` resource.",
+          "properties": {
+            "record_type": { "const": "HeliosDatasetRecord" },
+            "source": {
+              "type": "string",
+              "description": "Short source label (e.g. 'NASA-DONKI', 'CCMC-SEP-Scoreboard-A', 'NOAA-SWPC', 'CDDIS-GIM', 'GOES-18', 'DSCOVR').",
+              "minLength": 1
+            },
+            "mission": {
+              "type": "string",
+              "description": "Mission or programme (e.g. 'GOES-R', 'DSCOVR', 'CDDIS-IGS').",
+              "minLength": 1
+            },
+            "instrument": {
+              "type": "string",
+              "description": "Instrument or product name (e.g. 'SUVI', 'EPEAD', 'PlasMag/Faraday-Cup', 'GIM-IONEX')."
+            },
+            "format": {
+              "type": "string",
+              "description": "MIME or short format token (e.g. 'application/json', 'IONEX', 'CDF', 'netCDF-4', 'text/csv').",
+              "minLength": 1
+            },
+            "temporal_coverage": { "$ref": "#/$defs/TemporalCoverage" },
+            "spatial_coverage": { "$ref": "#/$defs/SpatialCoverage" },
+            "doi": {
+              "type": "string",
+              "pattern": "^(doi:)?10\\..+/.+",
+              "description": "DOI of the dataset, when one exists. Optional."
+            },
+            "source_url": { "$ref": "#/$defs/uri" },
+            "license": {
+              "type": "string",
+              "description": "SPDX identifier or short label (e.g. 'CC0-1.0', 'NASA-Public-Domain', 'CC-BY-4.0')."
+            },
+            "ingestion_timestamp": {
+              "$ref": "#/$defs/iso8601DateTime",
+              "description": "When the HELIOS ingestion tier fetched this dataset snapshot."
+            },
+            "spase_resource_id": {
+              "type": "string",
+              "description": "Optional SPASE `ResourceID` to anchor the crosswalk (e.g. 'spase://NASA/NumericalData/DSCOVR/Plasmag/...').",
+              "pattern": "^spase://"
+            }
+          },
+          "required": [
+            "source",
+            "format",
+            "temporal_coverage",
+            "source_url",
+            "ingestion_timestamp"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "HeliosModelOutputRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/HeliosProvenanceRecord" },
+        {
+          "type": "object",
+          "description": "A single output value emitted by an upstream model or measurement at a single timestamp (and optional location). One DONKI flare notification, one SEP Scoreboard A onset probability, one Kp index value, one TEC gridpoint, one GOES proton flux sample.",
+          "properties": {
+            "record_type": { "const": "HeliosModelOutputRecord" },
+            "model_id": {
+              "type": "string",
+              "description": "Short model/source identifier (e.g. 'UMASEP-10', 'SEPMOD', 'SWPC-Kp-3hr', 'GIM-CODE', 'GOES-18-EPEAD', 'DONKI-FLR').",
+              "minLength": 1
+            },
+            "model_version": {
+              "type": "string",
+              "description": "Model version label as published upstream. Use 'unspecified' if the source does not publish a version."
+            },
+            "dataset_refs": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/recordId" },
+              "minItems": 1,
+              "description": "IDs of the `HeliosDatasetRecord`s this output was extracted from."
+            },
+            "timestamp": {
+              "$ref": "#/$defs/iso8601DateTime",
+              "description": "Valid time of this value (NOT the ingestion timestamp)."
+            },
+            "location": {
+              "$ref": "#/$defs/SpatialCoverage",
+              "description": "Optional location for spatially-resolved values (e.g. a GIM TEC gridpoint)."
+            },
+            "value": {
+              "description": "Output value. Numeric for scalar outputs (probability, flux, index); string for categorical."
+            },
+            "value_units": {
+              "type": "string",
+              "description": "UDUNITS-compatible unit string (e.g. 'pfu', 'TECU', '1' for dimensionless probability, 'nT', 'cm/s')."
+            },
+            "confidence_interval": {
+              "$ref": "#/$defs/ConfidenceInterval",
+              "description": "Optional source-provided uncertainty."
+            },
+            "ingestion_timestamp": { "$ref": "#/$defs/iso8601DateTime" },
+            "extra": {
+              "type": "object",
+              "description": "Source-specific metadata that does not fit elsewhere (e.g. DONKI `activityID`, Scoreboard `event_window`). Free-form.",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "model_id",
+            "model_version",
+            "dataset_refs",
+            "timestamp",
+            "value",
+            "value_units",
+            "ingestion_timestamp"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "HeliosTransformationRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/HeliosProvenanceRecord" },
+        {
+          "type": "object",
+          "description": "A transformation applied during fusion: calibration, BMA averaging, conformal interval, scaling, filter, etc. Maps to W3C PROV `Activity`.",
+          "properties": {
+            "record_type": { "const": "HeliosTransformationRecord" },
+            "type": {
+              "type": "string",
+              "enum": ["calibration", "bma", "conformal", "scaling", "filter", "other"]
+            },
+            "parameters": {
+              "type": "object",
+              "description": "Free-form parameter object. Suggested keys: 'method', 'fitted_on', 'hyperparameters'.",
+              "additionalProperties": true
+            },
+            "code_ref": {
+              "type": "string",
+              "description": "Reference to the implementing code. URI, git permalink, or 'git+sha256:<sha>:<path>' for tamper-evident pinning.",
+              "minLength": 1
+            },
+            "input_refs": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/recordId" },
+              "minItems": 1,
+              "description": "IDs of model-output records (or other transformation outputs) consumed by this transformation."
+            },
+            "output_refs": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/recordId" },
+              "minItems": 1,
+              "description": "IDs of model-output records produced by this transformation."
+            }
+          },
+          "required": ["type", "parameters", "code_ref", "input_refs", "output_refs"]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "HeliosFusedOutputRecord": {
+      "allOf": [
+        { "$ref": "#/$defs/HeliosProvenanceRecord" },
+        {
+          "type": "object",
+          "description": "The headline HELIOS contribution: a single fused output value with full feature-level lineage. Tracks which upstream model outputs contributed, at what BMA weights, with what calibration, with what conformal interval. `provenance_chain_hash` is a SHA-256 of the canonicalised lineage for tamper-evidence.",
+          "properties": {
+            "record_type": { "const": "HeliosFusedOutputRecord" },
+            "prediction_target": {
+              "type": "string",
+              "description": "Short label for what is being predicted (e.g. 'sep_all_clear_revocation', 'rtk_2d_error_p95', 'kp_nowcast').",
+              "minLength": 1
+            },
+            "timestamp": {
+              "$ref": "#/$defs/iso8601DateTime",
+              "description": "Valid time of the fused prediction."
+            },
+            "location": {
+              "$ref": "#/$defs/SpatialCoverage",
+              "description": "Optional location for spatially-resolved fused outputs."
+            },
+            "value": {
+              "description": "Fused output value (numeric)."
+            },
+            "value_units": { "type": "string" },
+            "conformal_interval": { "$ref": "#/$defs/ConformalInterval" },
+            "lineage": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/LineageStep" },
+              "minItems": 1,
+              "description": "Ordered sequence of feature-level lineage steps from upstream model outputs to this fused value."
+            },
+            "provenance_chain_hash": {
+              "$ref": "#/$defs/sha256Hex",
+              "description": "Lowercase hex SHA-256 over the RFC-8785 JCS-canonicalised lineage (see helios_provenance.hashing). Tamper-evident."
+            }
+          },
+          "required": [
+            "prediction_target",
+            "timestamp",
+            "value",
+            "value_units",
+            "conformal_interval",
+            "lineage",
+            "provenance_chain_hash"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/$defs/HeliosDatasetRecord" },
+    { "$ref": "#/$defs/HeliosModelOutputRecord" },
+    { "$ref": "#/$defs/HeliosTransformationRecord" },
+    { "$ref": "#/$defs/HeliosFusedOutputRecord" }
+  ]
+}

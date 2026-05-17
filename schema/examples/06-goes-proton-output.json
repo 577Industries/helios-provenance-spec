@@ -1,0 +1,28 @@
+{
+  "id": "helios:output:goes18:proton-10mev/2024-05-08T22:00Z",
+  "record_type": "HeliosModelOutputRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-08T22:01:30Z",
+  "agent": {
+    "id": "helios:agent:connectors/goes@0.1.0",
+    "name": "helios-spaceweather-connectors GOES adapter",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "model_id": "GOES-18-EPEAD",
+  "model_version": "L2",
+  "dataset_refs": ["helios:dataset:goes18:epead/2024-05-08"],
+  "timestamp": "2024-05-08T22:00:00Z",
+  "location": {
+    "frame": "GEO",
+    "region": "GEO-West"
+  },
+  "value": 3.4,
+  "value_units": "pfu",
+  "ingestion_timestamp": "2024-05-08T22:01:30Z",
+  "extra": {
+    "energy_threshold_mev": 10,
+    "integral_flux": true,
+    "background_subtracted": false
+  }
+}

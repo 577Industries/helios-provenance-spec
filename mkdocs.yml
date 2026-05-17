@@ -42,3 +42,11 @@ markdown_extensions:
 
 nav:
   - Home: index.md
+  - Schema reference: schema.md
+  - Worked examples: examples.md
+  - API reference: api.md
+  - RFC-0001 — feature-level lineage: rfc/RFC-0001-feature-lineage.md
+  - Crosswalks:
+    - SPASE 2.7.1: crosswalks/spase.md
+    - W3C PROV-JSON: crosswalks/prov.md
+    - RO-Crate 1.2: crosswalks/ro-crate.md

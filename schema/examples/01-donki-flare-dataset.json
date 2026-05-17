@@ -1,0 +1,29 @@
+{
+  "id": "helios:dataset:donki:flares/2024-05-08",
+  "record_type": "HeliosDatasetRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-08T18:00:00Z",
+  "agent": {
+    "id": "helios:agent:connectors/donki@0.1.0",
+    "name": "helios-spaceweather-connectors DONKI adapter",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "source": "NASA-DONKI",
+  "mission": "CCMC-DONKI",
+  "instrument": "DONKI-FLR-API",
+  "format": "application/json",
+  "temporal_coverage": {
+    "start": "2024-05-08T00:00:00Z",
+    "stop": "2024-05-08T23:59:59Z",
+    "cadence": "PT1M"
+  },
+  "spatial_coverage": {
+    "frame": "HGS",
+    "region": "Heliosphere"
+  },
+  "source_url": "https://kauai.ccmc.gsfc.nasa.gov/DONKI/WS/get/FLR?startDate=2024-05-08&endDate=2024-05-08",
+  "license": "NASA-Public-Domain",
+  "ingestion_timestamp": "2024-05-08T18:00:00Z",
+  "spase_resource_id": "spase://NASA/Catalog/DONKI/FLR"
+}

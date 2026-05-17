@@ -1,0 +1,24 @@
+{
+  "id": "helios:output:donki:flare/2024-05-08T21:41Z",
+  "record_type": "HeliosModelOutputRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-08T22:05:00Z",
+  "agent": {
+    "id": "helios:agent:connectors/donki@0.1.0",
+    "name": "helios-spaceweather-connectors DONKI adapter",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "model_id": "DONKI-FLR",
+  "model_version": "unspecified",
+  "dataset_refs": ["helios:dataset:donki:flares/2024-05-08"],
+  "timestamp": "2024-05-08T21:41:00Z",
+  "value": "X1.0",
+  "value_units": "GOES-class",
+  "ingestion_timestamp": "2024-05-08T22:05:00Z",
+  "extra": {
+    "activity_id": "2024-05-08T21:41:00-FLR-001",
+    "source_location": "S20W60",
+    "active_region_num": 13664
+  }
+}

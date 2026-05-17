@@ -1,19 +1,19 @@
-        [build-system]
-        requires = ["hatchling>=1.21"]
-        build-backend = "hatchling.build"
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
 
-        [project]
-        name = "helios-provenance-spec"
-        description = "JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs, plus a pydantic v2 reference implementation. Composes SPASE 2.7.1, W3C PROV-JSON, and RO-Crate 1.2 JSON-LD with a novel feature-level transformation chain. Issued as an open RFC for community comment."
-        readme = "README.md"
-        requires-python = ">=3.11"
-        license = { text = "Apache-2.0" }
-        authors = [
-            { name = "Thomas Waweru", email = "t.waweru@577industries.com" },
-            { name = "577 Industries Inc.", email = "engineering@577industries.com" },
-        ]
-        keywords = ["heliophysics", "space-weather", "ml", "provenance", "fusion"]
-        classifiers = [
+[project]
+name = "helios-provenance-spec"
+description = "JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs, plus a pydantic v2 reference implementation. Composes SPASE 2.7.1, W3C PROV-JSON, and RO-Crate 1.2 JSON-LD with a novel feature-level transformation chain. Issued as an open RFC for community comment."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [
+    { name = "Thomas Waweru", email = "t.waweru@577industries.com" },
+    { name = "577 Industries Inc.", email = "engineering@577industries.com" },
+]
+keywords = ["heliophysics", "space-weather", "ml", "provenance", "fusion"]
+classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
@@ -26,91 +26,102 @@
     "Topic :: Scientific/Engineering :: Atmospheric Science",
     "Typing :: Typed",
 ]
-        dynamic = ["version"]
-        dependencies = [
-            "pydantic>=2.6",
-            "httpx>=0.27",
-            "pandas>=2.2",
-            "numpy>=1.26",
-            "python-dateutil>=2.9",
-        ]
+dynamic = ["version"]
+dependencies = [
+    "pydantic>=2.6",
+    "jsonschema>=4.22",
+    "rfc8785>=0.1; python_version >= '3.11'",
+    "rfc3339-validator>=0.1.4",
+    "rfc3987>=1.3.8",
+    "python-dateutil>=2.9",
+]
 
-        [project.optional-dependencies]
-        dev = [
-            "ruff>=0.4",
-            "mypy>=1.10",
-            "pytest>=8.2",
-            "pytest-cov>=5.0",
-            "pytest-asyncio>=0.23",
-            "hypothesis>=6.100",
-            "pre-commit>=3.7",
-            "detect-secrets>=1.5",
-        ]
-        docs = [
-            "mkdocs>=1.6",
-            "mkdocs-material>=9.5",
-            "mkdocstrings[python]>=0.25",
-        ]
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.4",
+    "mypy>=1.10",
+    "pytest>=8.2",
+    "pytest-cov>=5.0",
+    "hypothesis>=6.100",
+    "pre-commit>=3.7",
+    "detect-secrets>=1.5",
+    "lxml>=5.0",
+    "types-python-dateutil>=2.9",
+    "types-jsonschema>=4.22",
+]
+xml = [
+    "lxml>=5.0",
+]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.25",
+]
 
-        [project.urls]
-        Homepage = "https://github.com/577Industries/helios-provenance-spec"
-        Repository = "https://github.com/577Industries/helios-provenance-spec.git"
-        Issues = "https://github.com/577Industries/helios-provenance-spec/issues"
-        Documentation = "https://577industries.github.io/helios-provenance-spec"
+[project.scripts]
+helios-provenance-validate = "helios_provenance.validator:main"
 
-        [tool.hatch.version]
-        path = "src/helios_provenance/__init__.py"
+[project.urls]
+Homepage = "https://github.com/577Industries/helios-provenance-spec"
+Repository = "https://github.com/577Industries/helios-provenance-spec.git"
+Issues = "https://github.com/577Industries/helios-provenance-spec/issues"
+Documentation = "https://577industries.github.io/helios-provenance-spec"
 
-        [tool.hatch.build.targets.wheel]
-        packages = ["src/helios_provenance"]
+[tool.hatch.version]
+path = "src/helios_provenance/__init__.py"
 
-        [tool.ruff]
-        line-length = 100
-        target-version = "py311"
+[tool.hatch.build.targets.wheel]
+packages = ["src/helios_provenance"]
 
-        [tool.ruff.lint]
-        select = [
-            "E",   # pycodestyle errors
-            "W",   # pycodestyle warnings
-            "F",   # pyflakes
-            "I",   # isort
-            "UP",  # pyupgrade
-            "B",   # flake8-bugbear
-            "SIM", # flake8-simplify
-            "ARG", # unused arguments
-            "PTH", # use pathlib
-            "RUF", # ruff-specific
-        ]
-        ignore = ["E501"]  # line length handled by formatter
+[tool.hatch.build.targets.wheel.shared-data]
+"schema" = "helios_provenance/_schema"
 
-        [tool.ruff.lint.per-file-ignores]
-        "tests/**/*" = ["ARG", "B"]
+[tool.ruff]
+line-length = 100
+target-version = "py311"
 
-        [tool.mypy]
-        python_version = "3.11"
-        strict = true
-        warn_return_any = true
-        warn_unused_configs = true
-        disallow_untyped_defs = true
-        disallow_incomplete_defs = true
-        check_untyped_defs = true
-        ignore_missing_imports = true
-        files = ["src"]
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "ARG", # unused arguments
+    "PTH", # use pathlib
+    "RUF", # ruff-specific
+]
+ignore = ["E501"]  # line length handled by formatter
 
-        [tool.pytest.ini_options]
-        minversion = "8.0"
-        addopts = "-ra --strict-markers --cov=helios_provenance --cov-report=term-missing --cov-report=xml"
-        testpaths = ["tests"]
-        asyncio_mode = "auto"
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*" = ["ARG", "B"]
 
-        [tool.coverage.run]
-        branch = true
-        source = ["src/helios_provenance"]
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+ignore_missing_imports = true
+files = ["src"]
 
-        [tool.coverage.report]
-        exclude_lines = [
-            "pragma: no cover",
-            "raise NotImplementedError",
-            "if TYPE_CHECKING:",
-            "if __name__ == .__main__.:",
-        ]
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra --strict-markers --cov=helios_provenance --cov-report=term-missing --cov-report=xml"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+source = ["src/helios_provenance"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.:",
+]

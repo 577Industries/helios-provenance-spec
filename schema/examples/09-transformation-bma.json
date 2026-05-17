@@ -1,0 +1,32 @@
+{
+  "id": "helios:transform:bma/scoreboardA-onset/2024-05-08T22:00Z",
+  "record_type": "HeliosTransformationRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-08T22:12:00Z",
+  "agent": {
+    "id": "helios:agent:fusion-engine/bma@0.1.0",
+    "name": "helios-fusion-engine Bayesian Model Averaging orchestrator",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "type": "bma",
+  "parameters": {
+    "weight_window_days": 90,
+    "skill_metric": "Brier",
+    "weights": {
+      "helios:output:scoreboardA:umasep-10-cal/2024-05-08T22:00Z": 0.46,
+      "helios:output:scoreboardA:sepmod-cal/2024-05-08T22:00Z": 0.31,
+      "helios:output:scoreboardA:magpy-cal/2024-05-08T22:00Z": 0.23
+    },
+    "weight_normalisation": "softmax-skill"
+  },
+  "code_ref": "git+https://github.com/577Industries/helios-fusion-engine@a1b2c3d4#path=src/helios_fusion/bma/orchestrator.py",
+  "input_refs": [
+    "helios:output:scoreboardA:umasep-10-cal/2024-05-08T22:00Z",
+    "helios:output:scoreboardA:sepmod-cal/2024-05-08T22:00Z",
+    "helios:output:scoreboardA:magpy-cal/2024-05-08T22:00Z"
+  ],
+  "output_refs": [
+    "helios:output:fused:sep-onset-uncalibrated/2024-05-08T22:00Z"
+  ]
+}

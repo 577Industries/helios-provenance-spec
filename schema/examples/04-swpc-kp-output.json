@@ -1,0 +1,24 @@
+{
+  "id": "helios:output:swpc:kp/2024-05-10T21:00Z",
+  "record_type": "HeliosModelOutputRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-10T21:05:00Z",
+  "agent": {
+    "id": "helios:agent:connectors/swpc@0.1.0",
+    "name": "helios-spaceweather-connectors NOAA SWPC adapter",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "model_id": "SWPC-Kp-3hr",
+  "model_version": "v1",
+  "dataset_refs": ["helios:dataset:swpc:planetary-k-index/2024-05-10"],
+  "timestamp": "2024-05-10T21:00:00Z",
+  "value": 9.0,
+  "value_units": "Kp-index",
+  "ingestion_timestamp": "2024-05-10T21:05:00Z",
+  "extra": {
+    "window": "18:00-21:00Z",
+    "observation_type": "estimated",
+    "noaa_storm_scale": "G5"
+  }
+}
