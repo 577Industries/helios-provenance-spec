@@ -1,0 +1,27 @@
+{
+  "id": "helios:transform:conformal/sep-onset/2024-05-08T22:00Z",
+  "record_type": "HeliosTransformationRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-08T22:13:00Z",
+  "agent": {
+    "id": "helios:agent:fusion-engine/conformal@0.1.0",
+    "name": "helios-fusion-engine split-conformal wrapper",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "type": "conformal",
+  "parameters": {
+    "method": "conformal-split",
+    "alpha": 0.1,
+    "calibration_set_size": 412,
+    "nonconformity_score": "abs-residual",
+    "stratification": "kp-severity-bin"
+  },
+  "code_ref": "git+https://github.com/577-Industries/helios-fusion-engine@a1b2c3d4#path=src/helios_fusion/conformal/split.py",
+  "input_refs": [
+    "helios:output:fused:sep-onset-uncalibrated/2024-05-08T22:00Z"
+  ],
+  "output_refs": [
+    "helios:fused:sep-all-clear-revocation/2024-05-08T22:00Z"
+  ]
+}

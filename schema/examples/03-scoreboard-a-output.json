@@ -1,0 +1,30 @@
+{
+  "id": "helios:output:scoreboardA:umasep-10/2024-05-08T22:00Z",
+  "record_type": "HeliosModelOutputRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-08T22:10:00Z",
+  "agent": {
+    "id": "helios:agent:connectors/scoreboardA@0.1.0",
+    "name": "helios-spaceweather-connectors SEP Scoreboard A adapter",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "model_id": "UMASEP-10",
+  "model_version": "v2024.03",
+  "dataset_refs": ["helios:dataset:scoreboardA:2024-05-08"],
+  "timestamp": "2024-05-08T22:00:00Z",
+  "value": 0.72,
+  "value_units": "1",
+  "confidence_interval": {
+    "lower": 0.61,
+    "upper": 0.82,
+    "alpha": 0.1,
+    "method": "reported-by-source"
+  },
+  "ingestion_timestamp": "2024-05-08T22:10:00Z",
+  "extra": {
+    "threshold": ">=10 MeV at 10 pfu",
+    "lead_time_minutes": 120,
+    "event_window_hours": 24
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "id": "helios:output:dscovr:solarwind-speed/2024-05-10T17:30Z",
+  "record_type": "HeliosModelOutputRecord",
+  "schema_version": "0.1.0",
+  "created_at": "2024-05-10T17:31:00Z",
+  "agent": {
+    "id": "helios:agent:connectors/dscovr@0.1.0",
+    "name": "helios-spaceweather-connectors DSCOVR adapter",
+    "type": "software",
+    "version": "0.1.0"
+  },
+  "model_id": "DSCOVR-PlasMag",
+  "model_version": "L1",
+  "dataset_refs": ["helios:dataset:dscovr:plasmag/2024-05-10"],
+  "timestamp": "2024-05-10T17:30:00Z",
+  "location": {
+    "frame": "GSE",
+    "region": "L1"
+  },
+  "value": 822.0,
+  "value_units": "km/s",
+  "ingestion_timestamp": "2024-05-10T17:31:00Z",
+  "extra": {
+    "quality_flag": "good",
+    "instrument": "Faraday-Cup"
+  }
+}
