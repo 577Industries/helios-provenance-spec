@@ -1,6 +1,6 @@
 # helios-provenance-spec
 
-[![CI](https://github.com/577-Industries/helios-provenance-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/577-Industries/helios-provenance-spec/actions/workflows/ci.yml) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml) [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![PyPI](https://img.shields.io/pypi/v/helios-provenance-spec.svg)](https://pypi.org/project/helios-provenance-spec/)
 
 > JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs, plus a pydantic v2 reference implementation. Composes SPASE 2.7.1, W3C PROV-JSON, and RO-Crate 1.2 JSON-LD with a novel feature-level transformation chain. Issued as an open RFC for community comment.
@@ -27,10 +27,10 @@ print(helios_provenance.__version__)
 
 ## Documentation
 
-- **Master plan**: see [`helios-program`](https://github.com/577-Industries/helios-program) (private; internal team)
+- **Master plan**: see [`helios-program`](https://github.com/577Industries/helios-program) (private; internal team)
 - **Specification**: docs published at the project's docs site when available
 - **Provenance**: every output traces to its upstream model and transformation chain
-  via [`helios-provenance-spec`](https://github.com/577-Industries/helios-provenance-spec)
+  via [`helios-provenance-spec`](https://github.com/577Industries/helios-provenance-spec)
 
 ## License
 
@@ -48,6 +48,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Substantive changes should be discussed 
   title        = { helios-provenance-spec: JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs, plus a pydantic v2 reference implementation },
   year         = {2026},
   publisher    = {577 Industries Inc.},
-  url          = {https://github.com/577-Industries/helios-provenance-spec},
+  url          = {https://github.com/577Industries/helios-provenance-spec},
 }
 ```
