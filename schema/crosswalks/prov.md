@@ -35,7 +35,7 @@ document covering the records passed in:
 ```json
 {
   "prefix": {
-    "helios": "https://577-industries.github.io/helios-provenance-spec/ns/",
+    "helios": "https://577industries.github.io/helios-provenance-spec/ns/",
     "prov":   "http://www.w3.org/ns/prov#"
   },
   "entity":         { "<dataset-id>": {...}, "<output-id>": {...}, "<fused-id>": {...} },

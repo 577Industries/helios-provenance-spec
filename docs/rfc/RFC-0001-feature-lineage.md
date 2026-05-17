@@ -7,8 +7,8 @@
 | Authors | Thomas Waweru (577 Industries) |
 | Schema version | 0.1.0 |
 | Date | 2026-05-17 |
-| Discussion | <https://github.com/577-Industries/helios-provenance-spec/issues/1> |
-| Repository | <https://github.com/577-Industries/helios-provenance-spec> |
+| Discussion | <https://github.com/577Industries/helios-provenance-spec/issues/1> |
+| Repository | <https://github.com/577Industries/helios-provenance-spec> |
 
 ## Abstract
 
@@ -330,7 +330,7 @@ depends on how the community wants to use the spec. We seek input on:
    `schema_version` only.
 7. **JSON-LD context promotion.** The `@context` URI in the reference
    implementation is a placeholder. When (and where) should we publish a
-   stable HELIOS namespace? Candidates: `577-industries.github.io`
+   stable HELIOS namespace? Candidates: `577industries.github.io`
    (organisational), `w3id.org/helios/...` (community-owned), or piggyback
    on `schema.org` + PROV-O.
 8. **Tamper-evidence policy.** The current hash covers the lineage plus
@@ -340,7 +340,7 @@ depends on how the community wants to use the spec. We seek input on:
    bookkeeping-only updates.
 
 We'd welcome comments on any of the above in issue
-[#1](https://github.com/577-Industries/helios-provenance-spec/issues/1).
+[#1](https://github.com/577Industries/helios-provenance-spec/issues/1).
 
 ## 7. Adoption ask
 

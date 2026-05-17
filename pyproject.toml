@@ -62,10 +62,10 @@ docs = [
 helios-provenance-validate = "helios_provenance.validator:main"
 
 [project.urls]
-Homepage = "https://github.com/577-Industries/helios-provenance-spec"
-Repository = "https://github.com/577-Industries/helios-provenance-spec.git"
-Issues = "https://github.com/577-Industries/helios-provenance-spec/issues"
-Documentation = "https://577-industries.github.io/helios-provenance-spec"
+Homepage = "https://github.com/577Industries/helios-provenance-spec"
+Repository = "https://github.com/577Industries/helios-provenance-spec.git"
+Issues = "https://github.com/577Industries/helios-provenance-spec/issues"
+Documentation = "https://577industries.github.io/helios-provenance-spec"
 
 [tool.hatch.version]
 path = "src/helios_provenance/__init__.py"

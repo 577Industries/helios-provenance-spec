@@ -12,7 +12,7 @@ to `helios-provenance-spec==0.1.*` (or equivalent) during the RFC period.
 First public draft. **Issued as RFC.** Community feedback expected before
 stabilising to v1.0; see
 [RFC-0001](rfc/RFC-0001-feature-lineage.md) and
-[issue #1](https://github.com/577-Industries/helios-provenance-spec/issues/1).
+[issue #1](https://github.com/577Industries/helios-provenance-spec/issues/1).
 
 ### Added — schema
 
@@ -98,4 +98,4 @@ See RFC-0001 §6. Headline items:
   community input invited on whether to extend to `conformal_interval`,
   `location`, and `agent`.
 
-[0.1.0]: https://github.com/577-Industries/helios-provenance-spec/releases/tag/v0.1.0
+[0.1.0]: https://github.com/577Industries/helios-provenance-spec/releases/tag/v0.1.0

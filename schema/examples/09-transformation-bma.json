@@ -20,7 +20,7 @@
     },
     "weight_normalisation": "softmax-skill"
   },
-  "code_ref": "git+https://github.com/577-Industries/helios-fusion-engine@a1b2c3d4#path=src/helios_fusion/bma/orchestrator.py",
+  "code_ref": "git+https://github.com/577Industries/helios-fusion-engine@a1b2c3d4#path=src/helios_fusion/bma/orchestrator.py",
   "input_refs": [
     "helios:output:scoreboardA:umasep-10-cal/2024-05-08T22:00Z",
     "helios:output:scoreboardA:sepmod-cal/2024-05-08T22:00Z",

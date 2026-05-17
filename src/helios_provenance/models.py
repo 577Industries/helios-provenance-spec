@@ -33,7 +33,7 @@ SCHEMA_VERSION: Literal["0.1.0"] = "0.1.0"
 """Pinned semantic version of the HELIOS provenance schema this module implements."""
 
 JSONLD_CONTEXT_URI: str = (
-    "https://577-industries.github.io/helios-provenance-spec/context/v0.1.jsonld"
+    "https://577industries.github.io/helios-provenance-spec/context/v0.1.jsonld"
 )
 """IRI for the HELIOS RO-Crate-compatible JSON-LD context.
 

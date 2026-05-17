@@ -1,7 +1,7 @@
 # Schema reference
 
 The canonical schema lives at
-[`schema/helios-provenance-v0.1.json`](https://github.com/577-Industries/helios-provenance-spec/blob/main/schema/helios-provenance-v0.1.json)
+[`schema/helios-provenance-v0.1.json`](https://github.com/577Industries/helios-provenance-spec/blob/main/schema/helios-provenance-v0.1.json)
 and is shipped inside the wheel at
 `helios_provenance/_schema/helios-provenance-v0.1.json`.
 

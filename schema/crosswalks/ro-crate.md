@@ -39,7 +39,7 @@ HELIOS namespace under `@context`:
 
 ```json
 {
-  "@context": "https://577-industries.github.io/helios-provenance-spec/context/v0.1.jsonld",
+  "@context": "https://577industries.github.io/helios-provenance-spec/context/v0.1.jsonld",
   "@type": "helios:HeliosFusedOutputRecord",
   "@id": "helios:fused:sep-all-clear-revocation/2024-05-08T22:00Z",
   "record_type": "HeliosFusedOutputRecord",
@@ -55,7 +55,7 @@ HELIOS packaging helper) wraps them:
 {
   "@context": [
     "https://w3id.org/ro/crate/1.2/context",
-    "https://577-industries.github.io/helios-provenance-spec/context/v0.1.jsonld"
+    "https://577industries.github.io/helios-provenance-spec/context/v0.1.jsonld"
   ],
   "@graph": [
     {

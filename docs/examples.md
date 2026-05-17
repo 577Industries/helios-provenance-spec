@@ -42,7 +42,7 @@ output's lineage.
 Note how each `HeliosTransformationRecord` carries:
 
 * a `code_ref` that pins the implementing function to a specific git commit
-  (`git+https://github.com/577-Industries/helios-fusion-engine@a1b2c3d4#...`),
+  (`git+https://github.com/577Industries/helios-fusion-engine@a1b2c3d4#...`),
 * a `parameters` dict with the actual hyperparameter values (BMA weights,
   conformal α, calibration window size),
 * `input_refs` and `output_refs` that connect the activity to specific

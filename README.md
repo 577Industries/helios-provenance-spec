@@ -1,6 +1,6 @@
 # helios-provenance-spec
 
-[![CI](https://github.com/577-Industries/helios-provenance-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/577-Industries/helios-provenance-spec/actions/workflows/ci.yml)
+[![CI](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![PyPI](https://img.shields.io/pypi/v/helios-provenance-spec.svg)](https://pypi.org/project/helios-provenance-spec/)
 [![Schema: v0.1.0](https://img.shields.io/badge/schema-v0.1.0-orange.svg)](schema/helios-provenance-v0.1.json)
@@ -23,7 +23,7 @@ Data-Driven Applications for Space Weather R2O2R). See proposal §1.4 (CONOPS)
 feedback expected before stabilising to v1.0. Pin to `helios-provenance-spec==0.1.*`.
 
 * Design document: [`rfc/RFC-0001-feature-lineage.md`](rfc/RFC-0001-feature-lineage.md)
-* Discussion: [issue #1](https://github.com/577-Industries/helios-provenance-spec/issues/1)
+* Discussion: [issue #1](https://github.com/577Industries/helios-provenance-spec/issues/1)
 
 ## What it gives you
 
@@ -112,7 +112,7 @@ pytest
 
 ## Documentation
 
-* [Docs site](https://577-industries.github.io/helios-provenance-spec/) (build via `mkdocs serve`)
+* [Docs site](https://577industries.github.io/helios-provenance-spec/) (build via `mkdocs serve`)
 * [RFC-0001](rfc/RFC-0001-feature-lineage.md) — design, motivation, open questions
 * [Schema reference](docs/schema.md) — field-by-field type definitions
 * [Worked examples](docs/examples.md) — narrated walk-through of all eleven examples
@@ -137,6 +137,6 @@ are particularly hungry for community input.
   year         = {2026},
   version      = {0.1.0},
   publisher    = {577 Industries Inc.},
-  url          = {https://github.com/577-Industries/helios-provenance-spec},
+  url          = {https://github.com/577Industries/helios-provenance-spec},
 }
 ```

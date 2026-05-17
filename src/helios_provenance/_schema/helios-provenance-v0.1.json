@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://577-industries.github.io/helios-provenance-spec/schema/helios-provenance-v0.1.json",
+  "$id": "https://577industries.github.io/helios-provenance-spec/schema/helios-provenance-v0.1.json",
   "title": "HELIOS Provenance Spec v0.1",
   "description": "JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs. Composes SPASE 2.7.1 (dataset metadata), W3C PROV-JSON (lineage relations), and RO-Crate 1.2 JSON-LD (packaging) with a novel feature-level transformation chain that no existing heliophysics standard captures. RFC v0.1 — community feedback expected before stabilising to v1.0.",
   "type": "object",
