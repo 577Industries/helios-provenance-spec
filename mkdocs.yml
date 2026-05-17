@@ -1,0 +1,44 @@
+site_name: helios-provenance-spec
+site_description: "JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs, plus a pydantic v2 reference implementation."
+site_url: "https://577-industries.github.io/helios-provenance-spec/"
+repo_url: "https://github.com/577-Industries/helios-provenance-spec"
+repo_name: 577-Industries/helios-provenance-spec
+copyright: "Copyright 2026 577 Industries Inc."
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - search.suggest
+    - content.code.copy
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            docstring_style: google
+            show_source: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md

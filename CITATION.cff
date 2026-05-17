@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software in academic work, please cite as below."
+title: "helios-provenance-spec"
+abstract: "JSON Schema (draft 2020-12) describing feature-level provenance for fused space-weather model outputs, plus a pydantic v2 reference implementation. Composes SPASE 2.7.1, W3C PROV-JSON, and RO-Crate 1.2 JSON-LD with a novel feature-level transformation chain. Issued as an open RFC for community comment."
+authors:
+  - family-names: Waweru
+    given-names: Thomas
+    email: t.waweru@577industries.com
+    affiliation: 577 Industries Inc.
+keywords:
+  - heliophysics
+  - space weather
+  - machine learning
+  - provenance
+license: Apache-2.0
+repository-code: "https://github.com/577-Industries/helios-provenance-spec"
+url: "https://github.com/577-Industries/helios-provenance-spec"
+type: software
+version: 0.0.0
+date-released: "2026-05-17"
