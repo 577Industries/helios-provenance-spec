@@ -1,16 +1,20 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/577Industries/.github/main/brand/out/wordmark-dark.svg">
+  <img alt="577 Industries" height="44" src="https://raw.githubusercontent.com/577Industries/.github/main/brand/out/wordmark-light.svg">
+</picture>
+
 # helios-provenance-spec
 
-[![CI](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml/badge.svg)](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![PyPI](https://img.shields.io/pypi/v/helios-provenance-spec.svg)](https://pypi.org/project/helios-provenance-spec/)
-[![Schema: v0.1.0](https://img.shields.io/badge/schema-v0.1.0-orange.svg)](schema/helios-provenance-v0.1.json)
-[![Status: RFC](https://img.shields.io/badge/status-RFC-yellow.svg)](rfc/RFC-0001-feature-lineage.md)
+`HELIOS` · [program overview](https://github.com/577Industries#helios--calibrated-heliophysics-fusion)
 
-> JSON Schema (draft 2020-12) describing **feature-level provenance** for
-> fused space-weather model outputs, plus a pydantic v2 reference
-> implementation. Composes SPASE 2.7.1, W3C PROV-JSON, and RO-Crate 1.2
-> JSON-LD with a novel feature-level transformation chain. Issued as an open
-> RFC for community comment.
+**JSON Schema (draft 2020-12) for feature-level provenance in heliophysics fusion systems, with pydantic v2 reference implementation.**
+
+[![ci](https://img.shields.io/github/actions/workflow/status/577Industries/helios-provenance-spec/ci.yml?style=flat-square&label=ci)](https://github.com/577Industries/helios-provenance-spec/actions/workflows/ci.yml)
+[![release](https://img.shields.io/github/v/release/577Industries/helios-provenance-spec?style=flat-square)](https://github.com/577Industries/helios-provenance-spec/releases)
+[![license](https://img.shields.io/badge/license-Apache_2.0-blue?style=flat-square)](LICENSE)
+[![docs](https://img.shields.io/badge/docs-live-009688?style=flat-square)](https://577industries.github.io/helios-provenance-spec/)
+
+[![Status: RFC](https://img.shields.io/badge/status-RFC-yellow?style=flat-square)](rfc/RFC-0001-feature-lineage.md)
 
 ## Status
 
