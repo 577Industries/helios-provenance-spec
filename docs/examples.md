@@ -106,7 +106,9 @@ import json
 
 rec = parse_record(json.loads(open("schema/examples/11-fused-sep-all-clear.json").read()))
 assert rec.verify_hash() is True
-assert rec.provenance_chain_hash == "c7935d3f1df8d1d8eff627b16f8eb383be4cc31fe217bbd66a06e271197b7877"
+assert (
+    rec.provenance_chain_hash == "c7935d3f1df8d1d8eff627b16f8eb383be4cc31fe217bbd66a06e271197b7877"
+)
 ```
 
 Tamper detection:
