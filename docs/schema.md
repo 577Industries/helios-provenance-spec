@@ -116,6 +116,7 @@ or in code:
 
 ```python
 from helios_provenance import HeliosProvenanceValidator
+
 v = HeliosProvenanceValidator()
 errors = v.errors(record_dict)  # list of jsonschema.ValidationError (empty == valid)
 ```
